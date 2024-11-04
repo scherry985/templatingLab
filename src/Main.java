@@ -80,26 +80,31 @@ public class Main {
     }
 
     public static void addIngredient(Recipe<Ingredient> recipe, Scanner kb) {
-        System.out.println("Enter ingredient type");
-        System.out.println("1: Solid");
-        System.out.println("2: Liquid");
-        int input2 = kb.nextInt();
-        while (input2 != 1 && input2 != 2) {
-            input2 = kb.nextInt();
-        }
-        System.out.println("Enter ingredient name");
-        String name = kb.next();
-        System.out.println("Enter ingredient quantity");
-        double quantity = kb.nextDouble();
-        Ingredient ingredient;
-        if (input2 == 1) {
-            ingredient = new SolidIngredient(name, quantity);
+        try {
+            System.out.println("Enter ingredient type");
+            System.out.println("1: Solid");
+            System.out.println("2: Liquid");
+            int input2 = kb.nextInt();
+            while (input2 != 1 && input2 != 2) {
+                input2 = kb.nextInt();
+            }
+            System.out.println("Enter ingredient name");
+            String name = kb.next();
+            System.out.println("Enter ingredient quantity");
+            double quantity = kb.nextDouble();
+            Ingredient ingredient;
+            if (input2 == 1) {
+                ingredient = new SolidIngredient(name, quantity);
 
-        } else {
-            ingredient = new LiquidIngredient(name, quantity);
+            } else {
+                ingredient = new LiquidIngredient(name, quantity);
+            }
+            recipe.addIngredient(ingredient);
+            System.out.println("Added " + name + " to recipe.");
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input");
+            System.exit(-1);
         }
-        recipe.addIngredient(ingredient);
-        System.out.println("Added " + name + " to recipe.");
     }
     public static void main(String[] args) {
         Recipe<Ingredient> recipe = new Recipe<>("Pain", """
