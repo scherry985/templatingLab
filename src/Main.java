@@ -80,7 +80,6 @@ public class Main {
     }
 
     public static void addIngredient(Recipe<Ingredient> recipe, Scanner kb) {
-        // ToDo try/catch block
         System.out.println("Enter ingredient type");
         System.out.println("1: Solid");
         System.out.println("2: Liquid");
@@ -103,7 +102,6 @@ public class Main {
         System.out.println("Added " + name + " to recipe.");
     }
     public static void main(String[] args) {
-        // ToDo try/catch block Input for recipe variables
         Recipe<Ingredient> recipe = new Recipe<>("Pain", """
                  1. Add salt\s
                  2. Add Sugar\s
@@ -114,15 +112,20 @@ public class Main {
         recipe.addIngredient(li);
         Scanner kb = new Scanner(System.in);
         showOptions();
-        int input = kb.nextInt();
-        while (input != -1) {
-            if (input == 0){
-                recipe.print();
-            } else if (input == 1){
-                addIngredient(recipe, kb);
+        try {
+            int input = kb.nextInt();
+            while (input != -1) {
+                if (input == 0){
+                    recipe.print();
+                } else if (input == 1){
+                    addIngredient(recipe, kb);
+                }
+                showOptions();
+                input = kb.nextInt();
             }
-            showOptions();
-            input = kb.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Enter a valid number");
+            System.exit(-1);
         }
     }
 }
